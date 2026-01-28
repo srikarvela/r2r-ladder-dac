@@ -13,13 +13,11 @@ Monte Carlo analysis is a statistical technique historically adopted in analog a
 
 Rather than assuming ideal component values, Monte Carlo simulation repeatedly perturbs circuit parameters according to a defined probability distribution and evaluates the resulting system behavior. This approach became standard practice in IC design flows as process scaling increased variability and deterministic corner analysis became insufficient to capture yield-limiting effects.
 
-In this project, resistor mismatch is modeled as a normally distributed random variable applied to each binary-weighted DAC element:
+In this analysis, each resistor value is modeled as a random perturbation of its ideal value:
 
-\[
-R_i = R_{i,\text{ideal}} \cdot (1 + \epsilon_i), \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2)
-\]
+R_i = R_i,ideal · (1 + ε_i)
 
-where \( \sigma \) represents the relative standard deviation of resistor mismatch (set to 1% in this analysis). For each Monte Carlo run, a unique set of perturbed weights is generated, and the DAC output voltage is computed across all digital input codes. The results are then averaged across multiple runs to obtain statistically representative behavior.
+where ε_i is a zero-mean Gaussian random variable with variance σ². The parameter σ represents the relative standard deviation of resistor mismatch and is set to 1% in this study.
 
 This statistical modeling enables direct evaluation of standard DAC linearity metrics:
 - **Differential Nonlinearity (DNL)**, which measures deviation of each step size from the ideal 1 LSB increment
@@ -36,6 +34,7 @@ The resulting DNL and INL plots illustrate how small, random component mismatche
 </p>
 
 ---
+
 ## Architecture
 - Binary-weighted R-2R ladder topology
 - Passive resistor network driven by digital input codes
